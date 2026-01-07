@@ -1,0 +1,37 @@
+import smtplib
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+def verify_smtp_login():
+    host = os.getenv("SMTP_HOST")
+    port = int(os.getenv("SMTP_PORT", 587))
+    user = os.getenv("SMTP_USER")
+    password = os.getenv("SMTP_PASSWORD")
+
+    if not all([host, user, password]):
+        print("Missing SMTP credentials in .env")
+        return False
+
+    try:
+        server = smtplib.SMTP(host, port)
+        server.starttls()
+        server.login(user, password)
+        print("SMTP Login Successful!")
+        server.quit()
+        return True
+    except Exception as e:
+        print(f"SMTP Login Failed: {e}")
+        return False
+
+def main():
+    print("Executing verify_email_smtp.py...")
+    success = verify_smtp_login()
+    if success:
+        print("Email verification system ready.")
+    else:
+        print("Email verification system unavailable.")
+
+if __name__ == "__main__":
+    main()

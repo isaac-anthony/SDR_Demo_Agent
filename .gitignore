@@ -1,0 +1,7 @@
+.tmp/
+.env
+credentials.json
+token.json
+client_secrets.json
+__pycache__/
+*.pyc
